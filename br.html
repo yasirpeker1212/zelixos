@@ -4,72 +4,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy — ZelixOS</title>
-    <meta name="description" content="ZelixOS Privacy Policy — how we handle your data and protect your privacy.">
+    <title>Report a Bug — ZelixOS</title>
+    <meta name="description" content="Found a bug in ZelixOS? Help us improve by reporting it.">
     <link rel="stylesheet" href="styles.css">
     <script src="theme.js"></script>
     <style>
-        .policy-content {
-            max-width: 800px;
+        .bug-form-container {
+            max-width: 700px;
             margin: 0 auto;
         }
 
-        .policy-section {
+        .bug-form {
             background: var(--bg-card);
             border: 1px solid var(--border-card);
             border-radius: var(--radius-lg);
-            padding: 36px 32px;
-            margin-bottom: 24px;
+            padding: 40px 36px;
             backdrop-filter: blur(10px);
-            transition: border-color 0.3s ease;
         }
 
-        .policy-section:hover {
-            border-color: var(--border-hover);
+        .form-group {
+            margin-bottom: 24px;
         }
 
-        .policy-section h2 {
-            font-size: 1.4rem;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border-subtle);
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
         }
 
-        .policy-section h3 {
-            font-size: 1.05rem;
-            margin: 20px 0 10px;
-            color: var(--text-accent);
+        .form-group label span {
+            color: var(--brand-blue);
         }
 
-        .policy-section p {
-            color: var(--text-secondary);
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
             font-size: 0.92rem;
-            margin-bottom: 12px;
-            line-height: 1.7;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            outline: none;
         }
 
-        .policy-section ul,
-        .policy-section ol {
-            color: var(--text-secondary);
-            font-size: 0.92rem;
-            padding-left: 24px;
-            margin-bottom: 12px;
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            border-color: var(--brand-blue);
+            box-shadow: 0 0 0 3px rgba(79, 125, 247, 0.15);
         }
 
-        .policy-section li {
-            margin-bottom: 6px;
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .form-textarea {
+            min-height: 160px;
+            resize: vertical;
             line-height: 1.6;
         }
 
-        .policy-section a {
-            color: var(--text-accent);
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236B6B8E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
         }
 
-        .last-updated {
+        .form-select option {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-submit {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .form-note {
             text-align: center;
+            margin-top: 20px;
             color: var(--text-tertiary);
-            font-size: 0.85rem;
-            margin-top: 32px;
+            font-size: 0.82rem;
+        }
+
+        .alt-report {
+            max-width: 700px;
+            margin: 32px auto 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-lg);
+            padding: 28px 32px;
+            text-align: center;
+        }
+
+        .alt-report h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .alt-report p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 640px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .bug-form {
+                padding: 28px 20px;
+            }
         }
     </style>
 </head>
@@ -122,184 +184,87 @@
         </div>
         <div class="hero-grid"></div>
         <div class="page-hero-content">
-            <span class="badge">🔒 Legal</span>
-            <h1>Privacy <span class="gradient-text">Policy</span></h1>
-            <p>How we handle your data and protect your privacy.</p>
+            <span class="badge">🐛 Bug Report</span>
+            <h1>Report a <span class="gradient-text">Bug</span></h1>
+            <p>Found a bug or issue? We appreciate your feedback! Fill out the form below with as much detail as
+                possible.</p>
         </div>
     </section>
 
-    <!-- ═══ CONTENT ═══ -->
+    <!-- ═══ BUG REPORT FORM ═══ -->
     <section class="section-padding">
         <div class="container">
-            <div class="policy-content">
+            <div class="bug-form-container">
+                <form class="bug-form reveal" id="bugForm" onsubmit="return handleBugSubmit(event)">
 
-                <div class="policy-section reveal">
-                    <h2>Introduction</h2>
-                    <p>CyberPlus Studios ("we", "our", or "us") is committed to protecting your privacy. This Privacy
-                        Policy explains how we collect, use, and safeguard your information when you use ZelixOS or
-                        visit our website.</p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bugName">Your Name <span>*</span></label>
+                            <input type="text" id="bugName" class="form-input" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bugEmail">Email Address <span>*</span></label>
+                            <input type="email" id="bugEmail" class="form-input" placeholder="john@example.com"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bugCategory">Category <span>*</span></label>
+                        <select id="bugCategory" class="form-select" required>
+                            <option value="" disabled selected>Select a category</option>
+                            <option value="installation">Installation</option>
+                            <option value="desktop">Desktop Environment</option>
+                            <option value="apps">Applications</option>
+                            <option value="performance">Performance</option>
+                            <option value="networking">Networking</option>
+                            <option value="display">Display / Graphics</option>
+                            <option value="audio">Audio</option>
+                            <option value="zelix-tools">Zelix Tools</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bugVersion">ZelixOS Version</label>
+                        <select id="bugVersion" class="form-select">
+                            <option value="" disabled selected>Select your version</option>
+                            <option value="0.4">ZelixOS 0.4 (Latest)</option>
+                            <option value="0.3">ZelixOS 0.3</option>
+                            <option value="0.2">ZelixOS 0.2</option>
+                            <option value="minimal">ZelixOS Minimal Edition</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bugTitle">Bug Title <span>*</span></label>
+                        <input type="text" id="bugTitle" class="form-input" placeholder="Brief description of the issue"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bugDescription">Description <span>*</span></label>
+                        <textarea id="bugDescription" class="form-textarea"
+                            placeholder="Please describe the bug in detail. Include:&#10;- Steps to reproduce&#10;- Expected behavior&#10;- Actual behavior&#10;- Any error messages"
+                            required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary form-submit">
+                        🐛 Submit Bug Report
+                    </button>
+
+                    <p class="form-note">Your report will be sent to the ZelixOS development team. We'll get back to you
+                        if we need more info.</p>
+                </form>
+
+                <div class="alt-report reveal">
+                    <h3>Prefer GitHub?</h3>
+                    <p>You can also report bugs directly on our GitHub repository.</p>
+                    <a href="https://github.com/yasirpeker1212/zelixos/issues" target="_blank" rel="noopener"
+                        class="btn btn-secondary btn-sm">
+                        Open GitHub Issues →
+                    </a>
                 </div>
-
-                <div class="policy-section reveal">
-                    <h2>Information We Collect</h2>
-
-                    <h3>1. Information You Provide Directly</h3>
-                    <ul>
-                        <li><strong>Bug Reports:</strong> When you submit a bug report, we collect your name, email
-                            address, and the details you provide about the issue</li>
-                        <li><strong>Contact Information:</strong> When you contact us for support or inquiries, we
-                            collect the information you provide in your message</li>
-                        <li><strong>Community Participation:</strong> If you participate in our forums or community
-                            channels, we may collect your username and contributions</li>
-                    </ul>
-
-                    <h3>2. Website Usage Information</h3>
-                    <p>When you visit our website, we may collect:</p>
-                    <ul>
-                        <li>Browser type and version</li>
-                        <li>Operating system</li>
-                        <li>Pages visited and time spent on pages</li>
-                        <li>Referring website addresses</li>
-                        <li>IP address (anonymized)</li>
-                    </ul>
-
-                    <h3>3. Information We Do NOT Collect</h3>
-                    <ul>
-                        <li>We do not collect personal files or documents from your system</li>
-                        <li>We do not track your browsing history within ZelixOS</li>
-                        <li>We do not collect biometric data</li>
-                        <li>We do not sell your data to third parties</li>
-                    </ul>
-                </div>
-
-                <div class="policy-section reveal">
-                    <h2>How We Use Your Information</h2>
-                    <p>We use the information we collect for the following purposes:</p>
-                    <ul>
-                        <li><strong>System Improvement:</strong> To identify and fix bugs, improve performance, and
-                            enhance user experience</li>
-                        <li><strong>Support:</strong> To respond to your inquiries and provide technical assistance</li>
-                        <li><strong>Communication:</strong> To send important updates about ZelixOS (security patches,
-                            major releases)</li>
-                        <li><strong>Analytics:</strong> To understand how our website is used and improve its
-                            functionality</li>
-                        <li><strong>Legal Compliance:</strong> To comply with applicable laws and regulations</li>
-                    </ul>
-                </div>
-
-                <div class="policy-section reveal">
-                    <h2>Data Sharing and Disclosure</h2>
-                    <p>We respect your privacy and limit data sharing to essential purposes:</p>
-                    <ul>
-                        <li><strong>Third-Party Services:</strong> We may use third-party services (like GitHub for
-                            hosting) that have their own privacy policies</li>
-                        <li><strong>Legal Requirements:</strong> We may disclose information if required by law or to
-                            protect our rights</li>
-                        <li><strong>With Your Consent:</strong> We may share information with your explicit permission
-                        </li>
-                    </ul>
-                    <p>We never sell your personal information to third parties.</p>
-                </div>
-
-                <div class="policy-section reveal">
-                    <h2>Open Source Components</h2>
-                    <p>ZelixOS is built on open-source software. Many components are developed by third parties and
-                        governed by their own licenses and privacy practices. These include:</p>
-                    <ul>
-                        <li>KDE Plasma desktop environment</li>
-                        <li>XFCE desktop environment</li>
-                        <li>Various GNU/Linux utilities and applications</li>
-                    </ul>
-                    <p>We recommend reviewing the privacy policies of individual applications you choose to use within
-                        ZelixOS.</p>
-                </div>
-
-                <div class="policy-section reveal">
-                    <h2>Data Security</h2>
-                    <p>We implement reasonable security measures to protect your information:</p>
-                    <ul>
-                        <li>Secure data transmission (HTTPS)</li>
-                        <li>Limited access to personal information</li>
-                        <li>Regular security updates for our systems</li>
-                        <li>Encryption of sensitive data</li>
-                    </ul>
-                    <p>However, no method of transmission over the internet is 100% secure. While we strive to protect
-                        your information, we cannot guarantee absolute security.</p>
-                </div>
-
-                <div class="policy-section reveal">
-                    <h2>Data Retention</h2>
-                    <p>We retain your information for as long as necessary to fulfill the purposes outlined in this
-                        policy:</p>
-                    <ul>
-                        <li><strong>Bug Reports:</strong> Retained until the issue is resolved or for a reasonable
-                            period for analysis</li>
-                        <li><strong>Website Analytics:</strong> Typically retained for 12–24 months</li>
-                        <li><strong>Support Communications:</strong> Retained for reference and quality assurance
-                            purposes</li>
-                    </ul>
-                </div>
-
-                <div class="policy-section reveal">
-                    <h2>Your Rights</h2>
-                    <p>Depending on your location, you may have certain rights regarding your personal information:</p>
-                    <ul>
-                        <li><strong>Access:</strong> Request access to the personal information we hold about you</li>
-                        <li><strong>Correction:</strong> Request correction of inaccurate or incomplete information</li>
-                        <li><strong>Deletion:</strong> Request deletion of your personal information</li>
-                        <li><strong>Objection:</strong> Object to our processing of your personal information</li>
-                        <li><strong>Data Portability:</strong> Request a copy of your data in a structured format</li>
-                    </ul>
-                    <p>To exercise these rights, please contact us using the information below.</p>
-                </div>
-
-                <div class="policy-section reveal">
-                    <h2>Children's Privacy</h2>
-                    <p>ZelixOS is not specifically designed for children under 13. We do not knowingly collect personal
-                        information from children under 13. If you believe we have collected information from a child
-                        under 13, please contact us immediately.</p>
-                </div>
-
-                <div class="policy-section reveal">
-                    <h2>Third-Party Links</h2>
-                    <p>Our website and ZelixOS may contain links to third-party websites and services. We are not
-                        responsible for the privacy practices of these external sites. We encourage you to review their
-                        privacy policies.</p>
-                </div>
-
-                <div class="policy-section reveal">
-                    <h2>Updates to This Policy</h2>
-                    <p>We may update this Privacy Policy from time to time. We will notify you of significant changes
-                        by:</p>
-                    <ul>
-                        <li>Posting the updated policy on our website</li>
-                        <li>Updating the "Last Updated" date at the top of this page</li>
-                        <li>Providing notice through ZelixOS or via email for material changes</li>
-                    </ul>
-                </div>
-
-                <div class="policy-section reveal">
-                    <h2>Contact Us</h2>
-                    <p>If you have questions, concerns, or requests regarding this Privacy Policy or our privacy
-                        practices, please contact us:</p>
-                    <p><strong>CyberPlus Studios — ZelixOS Team</strong></p>
-                    <ul>
-                        <li>Email: <a href="mailto:yasirzengin10@gmail.com">yasirzengin10@gmail.com</a></li>
-                        <li>Bug Reports: <a href="br.html">Report a Bug</a></li>
-                        <li>Website: <a href="index.html">zelixos</a></li>
-                    </ul>
-                </div>
-
-                <div class="policy-section reveal">
-                    <h2>Commitment to Privacy</h2>
-                    <p>At ZelixOS, we believe in the principles of free and open-source software. Privacy is a
-                        fundamental right, and we are committed to maintaining your trust through transparent practices
-                        and responsible data handling.</p>
-                    <p>Remember: As a Linux distribution, you have full control over your system. You can review,
-                        modify, or remove any component of ZelixOS. Your data belongs to you.</p>
-                </div>
-
-                <p class="last-updated">Last Updated: 2025</p>
             </div>
         </div>
     </section>
@@ -357,6 +322,25 @@
     </footer>
 
     <script src="animations.js"></script>
+    <script>
+        function handleBugSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('bugName').value;
+            const email = document.getElementById('bugEmail').value;
+            const category = document.getElementById('bugCategory').value;
+            const version = document.getElementById('bugVersion').value;
+            const title = document.getElementById('bugTitle').value;
+            const description = document.getElementById('bugDescription').value;
+
+            // Compose mailto link
+            const subject = encodeURIComponent(`[Bug Report] ${title}`);
+            const body = encodeURIComponent(
+                `Name: ${name}\nEmail: ${email}\nCategory: ${category}\nVersion: ${version || 'Not specified'}\n\n${description}`
+            );
+            window.location.href = `mailto:yasirzengin10@gmail.com?subject=${subject}&body=${body}`;
+            return false;
+        }
+    </script>
 </body>
 
 </html>
