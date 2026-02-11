@@ -1,319 +1,226 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="auto">
+<html lang="en" data-theme="dark">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="color-scheme" content="dark light" />
-  <title>About • ZelixOS</title>
-  <link rel="icon" type="image/x-icon" href="icons/favicon.ico" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
-
-  <style>
-    /* ------- Reset & Base ------- */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, sans-serif;
-      line-height: 1.6;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    /* ------- Theme Variables (Dark default) ------- */
-    :root{
-      --primary:#6366f1; --primary-dark:#4f46e5; --accent:#06b6d4;
-
-      --bg:#0a0a0f; --bg-elev:#101219; --bg-muted:#0b0d13;
-      --text:#e5e7eb; --text-dim:#9ca3af;
-
-      --border:rgba(99,102,241,.18);
-      --border-strong:rgba(99,102,241,.28);
-      --shadow:rgba(0,0,0,.5);
-      --muted-hover:rgba(99,102,241,.06);
-      --muted-strong:rgba(99,102,241,.12);
-    }
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg:#ffffff; --bg-elev:#ffffff; --bg-muted:#f7f8fb;
-        --text:#0b1020; --text-dim:#5b6478;
-        --border:rgba(15,23,42,.08);
-        --border-strong:rgba(99,102,241,.22);
-        --shadow:rgba(15,23,42,.06);
-        --muted-hover:rgba(99,102,241,.06);
-        --muted-strong:rgba(99,102,241,.1);
-      }
-    }
-    [data-theme="light"]{
-      --bg:#ffffff; --bg-elev:#ffffff; --bg-muted:#f7f8fb;
-      --text:#0b1020; --text-dim:#5b6478;
-      --border:rgba(15,23,42,.08);
-      --border-strong:rgba(99,102,241,.22);
-      --shadow:rgba(15,23,42,.06);
-      --muted-hover:rgba(99,102,241,.06);
-      --muted-strong:rgba(99,102,241,.1);
-    }
-    [data-theme="dark"]{
-      --bg:#0a0a0f; --bg-elev:#101219; --bg-muted:#0b0d13;
-      --text:#e5e7eb; --text-dim:#9ca3af;
-      --border:rgba(99,102,241,.18);
-      --border-strong:rgba(99,102,241,.28);
-      --shadow:rgba(0,0,0,.5);
-      --muted-hover:rgba(99,102,241,.06);
-      --muted-strong:rgba(99,102,241,.12);
-    }
-
-    /* ------- Top Nav ------- */
-    .nav{ position:fixed; inset:0 0 auto 0; z-index:1000;
-      background: color-mix(in oklab, var(--bg), transparent 20%);
-      backdrop-filter: blur(10px);
-      border-bottom:1px solid var(--border);
-    }
-    .nav-content{
-      max-width:1400px; margin:0 auto; padding:.85rem 1rem;
-      display:flex; align-items:center; justify-content:space-between; gap:1rem;
-    }
-    .logo{
-      font-weight:800; letter-spacing:.2px; font-size:1.25rem;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-    }
-    .nav-right{ display:flex; align-items:center; gap:.8rem; }
-    .nav-links{ list-style:none; display:flex; gap:1rem; }
-    .nav-links a{
-      color:var(--text); text-decoration:none; font-weight:600;
-      padding:.45rem .6rem; border-radius:10px; transition:background .2s,color .2s;
-    }
-    .nav-links a:hover{ background:var(--muted-hover); color:var(--primary); }
-    .nav-links .active{ outline:2px solid var(--border-strong); outline-offset:2px; border-radius:10px; }
-    .theme-toggle{
-      border:1px solid var(--border); background:var(--bg-elev); color:var(--text);
-      padding:.45rem .7rem; border-radius:10px; font-weight:700; cursor:pointer;
-      transition:background .2s,border-color .2s,transform .1s;
-    }
-    .theme-toggle:active{ transform:scale(.98); }
-
-    /* ------- Sections ------- */
-    section{ padding:5rem 1.25rem; max-width:1400px; margin:0 auto; }
-    .hero{
-      padding-top:7rem; padding-bottom:2.5rem; text-align:center;
-      background:
-        radial-gradient(70% 50% at 50% 15%, color-mix(in oklab, var(--primary) 14%, transparent), transparent 60%),
-        var(--bg);
-    }
-    .hero h1{
-      font-size: clamp(2.1rem, 6vw, 3.6rem);
-      font-weight: 900; line-height:1.1; margin-bottom: .6rem;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-    }
-    .hero p{ color:var(--text-dim); max-width:820px; margin:0 auto; font-size:1.05rem; }
-
-    .subhead{ text-align:center; font-size: clamp(1.6rem, 3.5vw, 2rem); font-weight:800; margin-bottom:.6rem; }
-    .lead{ text-align:center; color:var(--text-dim); max-width:820px; margin:.3rem auto 1.7rem; }
-
-    /* ------- Cards & Grid ------- */
-    .grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1rem; }
-    .card{
-      background:var(--bg-elev); border:1px solid var(--border); border-radius:16px;
-      padding:1.4rem; transition:transform .15s, border-color .2s, box-shadow .2s;
-      box-shadow: 0 10px 28px var(--shadow);
-    }
-    .card:hover{ transform: translateY(-4px); border-color:var(--border-strong); }
-
-    /* ------- Team ------- */
-    .team-grid{
-      display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap:1.25rem; margin-top:1rem;
-    }
-    .avatar{
-      width:108px; height:108px; border-radius:50%; margin:0 auto .9rem;
-      overflow:hidden; border:2px solid var(--border-strong); box-shadow:0 6px 18px var(--shadow);
-    }
-    .avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
-    .card h3{ text-align:center; font-size:1.15rem; margin-bottom:.25rem; }
-    .role{ text-align:center; color:var(--text-dim); font-size:.95rem; margin-bottom:.6rem; }
-    .meta{ text-align:center; color:var(--text-dim); font-size:.9rem; }
-
-    /* ------- Timeline ------- */
-    .timeline{ max-width:920px; margin:1rem auto 0; }
-    .tl-item{
-      display:grid; grid-template-columns: 120px 1fr; gap:1rem; padding:1rem 0;
-      border-bottom:1px solid var(--border);
-    }
-    .tl-item:last-child{ border-bottom:none; }
-    .tl-date{ color:var(--text-dim); font-weight:700; }
-    .tl-body h4{ font-size:1.05rem; margin-bottom:.2rem; }
-    .tl-body p{ color:var(--text-dim); }
-
-    /* ------- Footer ------- */
-    footer{
-      background:var(--bg-muted); border-top:1px solid var(--border);
-      padding:2.4rem 1.25rem; text-align:center; color:var(--text-dim);
-    }
-
-    /* ------- Responsive ------- */
-    @media (max-width: 768px){
-      .nav-links{ display:none; }
-      section{ padding:3.2rem 1rem; }
-      .tl-item{ grid-template-columns: 1fr; }
-      .tl-date{ order:-1; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — ZelixOS</title>
+    <meta name="description" content="Learn about ZelixOS, the people behind it, and the journey so far.">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme.js"></script>
 </head>
+
 <body>
-  <!-- Top Nav -->
-  <nav class="nav" aria-label="Primary">
-    <div class="nav-content">
-      <div class="logo">ZelixOS</div>
-      <div class="nav-right">
-        <ul class="nav-links">
-          <li><a href="index.html#features">Features</a></li>
-          <li><a href="index.html#specs">System Requirements</a></li>
-          <li><a href="wiki.html">Wiki</a></li>
-          <li><a class="active" href="about.html">About</a></li>
-          <li><a href="index.html#download">Download</a></li>
-        </ul>
-        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌗 Theme</button>
-      </div>
-    </div>
-  </nav>
 
-  <!-- Hero -->
-  <header class="hero">
-    <h1>About ZelixOS</h1>
-    <p>
-      A fast, friendly, elegant Linux experience — built with care and precision.
-    </p>
-  </header>
+    <!-- ═══ NAVBAR ═══ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="url(#logo-grad)" />
+                    <path d="M8 22L16 10L20 16L24 10" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <defs>
+                        <linearGradient id="logo-grad" x1="0" y1="0" x2="32" y2="32">
+                            <stop stop-color="#4F7DF7" />
+                            <stop offset="1" stop-color="#8B5CF6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                ZelixOS
+            </a>
 
-  <!-- NEW: About the OS (before Meet the People) -->
-  <section aria-labelledby="about-os-title">
-    <h2 id="about-os-title" class="subhead">About the OS</h2>
-    <p class="lead">
-      ZelixOS blends performance, clean design, and approachability. It favors reliable defaults,
-      a polished onboarding, and tools that respect your time and privacy.
-    </p>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="download.html">Download</a></li>
+                <li><a href="wiki.html">Wiki</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+            </ul>
 
-    <div class="grid" style="margin-top:.5rem">
-      <div class="card">
-        <h3 style="margin-bottom:.35rem;">Design & UX</h3>
-        <p style="color:var(--text-dim)">Thoughtful visuals, consistent spacing, and accessible contrast for a calm, focused desktop.</p>
-      </div>
-      <div class="card">
-        <h3 style="margin-bottom:.35rem;">Performance</h3>
-        <p style="color:var(--text-dim)">Snappy defaults and tuned services deliver a responsive feel across a wide range of hardware.</p>
-      </div>
-      <div class="card">
-        <h3 style="margin-bottom:.35rem;">Developer-Friendly</h3>
-        <p style="color:var(--text-dim)">Ready-to-code setup with sensible tools, clear docs, and minimal friction.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- People -->
-  <section aria-labelledby="team-title">
-    <h2 id="team-title" class="subhead">Meet the People Behind ZelixOS</h2>
-    <p class="lead">
-      Everything you see here was built by <strong>Muhammed Yasir Peker</strong>.  
-      Special thanks to <strong>Mustafa Peker</strong> for <em>Financial Support</em>.
-    </p>
-
-    <div class="team-grid" role="list">
-      <!-- Yasir -->
-      <article class="card" role="listitem">
-        <div class="avatar">
-          <img src="icons/yasir.jpg" alt="Portrait of Muhammed Yasir Peker" loading="lazy">
+            <div class="nav-actions">
+                <div class="theme-toggle" id="themeToggle">
+                    <button data-theme="light" title="Light mode" aria-label="Light mode">☀️</button>
+                    <button data-theme="dark" title="Dark mode" aria-label="Dark mode">🌙</button>
+                    <button data-theme="system" title="System default" aria-label="System default">🖥️</button>
+                </div>
+                <a href="download.html" class="btn btn-primary btn-nav">Download</a>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
         </div>
-        <h3>Muhammed Yasir Peker</h3>
-        <div class="role">Founder • Lead Developer • Everything</div>
-        <p class="meta">Design system, installer, defaults, tooling, docs — Made by Yasir Peker himself.</p>
-      </article>
+    </nav>
 
-      <!-- Mustafa -->
-      <article class="card" role="listitem">
-        <div class="avatar">
-          <img src="icons/mustafa.jpg" alt="Portrait of Mustafa Peker" loading="lazy">
+    <!-- ═══ PAGE HERO ═══ -->
+    <section class="page-hero">
+        <div class="hero-bg">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
         </div>
-        <h3>Mustafa Peker</h3>
-        <div class="role">Financial Support </div>
-        <p class="meta">Financial support that provides sustainability and momentum to the project.</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- Timeline (opsiyonel örnek) -->
-  <section aria-labelledby="timeline-title">
-    <h2 id="timeline-title" class="subhead">ZelixOS Story</h2>
-    <p class="lead">A few milestones on the road so far.</p>
-
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="tl-date">2025 Q1</div>
-        <div class="tl-body">
-          <h4>Project Foundations</h4>
-          <p>First prototypes, theming system, installer experiments.</p>
+        <div class="hero-grid"></div>
+        <div class="page-hero-content">
+            <span class="badge">ℹ️ About</span>
+            <h1>About <span class="gradient-text">ZelixOS</span></h1>
+            <p>A fast, friendly, elegant Linux experience — built with care and precision.</p>
         </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">2025 Q2</div>
-        <div class="tl-body">
-          <h4>Desktop Polish</h4>
-          <p>Welcome app, defaults tuning, backup utility drafts.</p>
+    </section>
+
+    <!-- ═══ ABOUT THE OS ═══ -->
+    <section class="section-padding" id="about-os">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>What Makes ZelixOS <span class="gradient-text">Special</span></h2>
+                <p>ZelixOS blends performance, clean design, and approachability. It favors reliable defaults, a
+                    polished onboarding, and tools that respect your time and privacy.</p>
+            </div>
+
+            <div class="about-cards">
+                <div class="about-card reveal reveal-delay-1">
+                    <div class="about-icon">🎨</div>
+                    <h3>Design &amp; UX</h3>
+                    <p>Thoughtful visuals, consistent spacing, and accessible contrast for a calm, focused desktop.</p>
+                </div>
+                <div class="about-card reveal reveal-delay-2">
+                    <div class="about-icon">⚡</div>
+                    <h3>Performance</h3>
+                    <p>Snappy defaults and tuned services deliver a responsive feel across a wide range of hardware.</p>
+                </div>
+                <div class="about-card reveal reveal-delay-3">
+                    <div class="about-icon">💻</div>
+                    <h3>Developer-Friendly</h3>
+                    <p>Ready-to-code setup with sensible tools, clear docs, and minimal friction.</p>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">2025 Q3</div>
-        <div class="tl-body">
-          <h4>Public Preview</h4>
-          <p>Docs refresh, simplified ISO, early community feedback.</p>
+    </section>
+
+    <!-- ═══ TEAM ═══ -->
+    <section class="section-padding" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="badge">👥 Team</span>
+                <h2>Meet the <span class="gradient-text">People</span> Behind ZelixOS</h2>
+                <p>Everything you see here was built by Muhammed Yasir Peker. Special thanks to Mustafa Peker for
+                    financial support.</p>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-card reveal reveal-delay-1">
+                    <div class="team-avatar">MY</div>
+                    <h3>Muhammed Yasir Peker</h3>
+                    <p class="team-role">Founder &amp; Developer</p>
+                    <p>Design system, installer, defaults, tooling, docs — Made by Yasir Peker himself.</p>
+                </div>
+                <div class="team-card reveal reveal-delay-2">
+                    <div class="team-avatar">MP</div>
+                    <h3>Mustafa Peker</h3>
+                    <p class="team-role">Financial Supporter</p>
+                    <p>Financial support that provides sustainability and momentum to the project.</p>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">2025 Q4</div>
-        <div class="tl-body">
-          <h4>Next Steps</h4>
-          <p>Stability push, translation drive, developer tooling roadmap.</p>
+    </section>
+
+    <!-- ═══ TIMELINE ═══ -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="badge">📅 Story</span>
+                <h2>The ZelixOS <span class="gradient-text">Journey</span></h2>
+                <p>A few milestones on the road so far.</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item reveal reveal-delay-1">
+                    <h3>🧱 Project Foundations</h3>
+                    <p>First prototypes, theming system, installer experiments.</p>
+                </div>
+                <div class="timeline-item reveal reveal-delay-2">
+                    <h3>✨ Desktop Polish</h3>
+                    <p>Welcome app, defaults tuning, backup utility drafts.</p>
+                </div>
+                <div class="timeline-item reveal reveal-delay-3">
+                    <h3>🌍 Public Preview</h3>
+                    <p>Docs refresh, simplified ISO, early community feedback.</p>
+                </div>
+                <div class="timeline-item reveal reveal-delay-4">
+                    <h3>🚀 Next Steps</h3>
+                    <p>Stability push, translation drive, developer tooling roadmap.</p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <footer>
-    <p>&copy; 2025 ZelixOS by CyberPlus Studios. All rights reserved.</p>
-    <p style="margin-top:.5rem">
-      Want to help? Get in touch and shape the future of ZelixOS.
-    </p>
-  </footer>
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="nav-brand">
+                    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                        <rect width="32" height="32" rx="8" fill="url(#logo-grad2)" />
+                        <path d="M8 22L16 10L20 16L24 10" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <defs>
+                            <linearGradient id="logo-grad2" x1="0" y1="0" x2="32" y2="32">
+                                <stop stop-color="#4F7DF7" />
+                                <stop offset="1" stop-color="#8B5CF6" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    ZelixOS
+                </a>
+                <p>A modern, user-friendly Linux distribution built with care and precision by CyberPlus Studios.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="download.html">Download</a></li>
+                    <li><a href="index.html#specs">Requirements</a></li>
+                    <li><a href="index.html#gallery">Gallery</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="wiki.html">Documentation</a></li>
+                    <li><a href="https://www.reddit.com/r/ZelixOS/" target="_blank" rel="noopener">Community</a></li>
+                    <li><a href="https://github.com/yasirpeker1212/zelixos/" target="_blank" rel="noopener">GitHub</a>
+                    </li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="pp.html">Privacy Policy</a></li>
+                    <li><a href="br.html">Report a Bug</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 ZelixOS by CyberPlus Studios. All rights reserved.</p>
+            <div class="footer-social">
+                <a href="https://github.com/yasirpeker1212/zelixos/" target="_blank" rel="noopener" title="GitHub"
+                    aria-label="GitHub">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                </a>
+                <a href="https://www.reddit.com/r/ZelixOS/" target="_blank" rel="noopener" title="Reddit"
+                    aria-label="Reddit">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0A12 12 0 000 12a12 12 0 0024 0A12 12 0 0012 0zm5.01 13.38c.15.36.23.75.23 1.14 0 2.82-3.28 5.1-7.32 5.1s-7.32-2.28-7.32-5.1c0-.4.08-.78.23-1.14a1.52 1.52 0 01-.65-1.25c0-.84.68-1.52 1.52-1.52.39 0 .74.15 1.01.39a9.1 9.1 0 014.59-1.41l.88-4.12a.31.31 0 01.37-.24l2.91.62a1.07 1.07 0 012.01.49 1.07 1.07 0 01-2.08.34l-2.56-.55-.78 3.65a9.06 9.06 0 014.5 1.4c.27-.25.63-.4 1.03-.4.84 0 1.52.68 1.52 1.52 0 .51-.26.97-.66 1.25zM8.28 14.12a1.07 1.07 0 100 2.14 1.07 1.07 0 000-2.14zm7.44 0a1.07 1.07 0 100 2.14 1.07 1.07 0 000-2.14zm-5.87 3.63c.18.18 1.03.72 2.15.72s1.97-.54 2.15-.72a.32.32 0 000-.45.32.32 0 00-.45 0c-.02.02-.72.48-1.7.48s-1.68-.46-1.7-.48a.32.32 0 00-.45 0 .32.32 0 000 .45z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
 
-  <script>
-    /* Smooth scroll for internal anchors */
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click',e=>{
-        const id=a.getAttribute('href'); const el=document.querySelector(id);
-        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'}); }
-      });
-    });
-
-    /* Theme toggle: auto -> light -> dark (persisted) */
-    (function(){
-      const KEY='zelixos-theme';
-      const root=document.documentElement;
-      const btn=document.getElementById('themeToggle');
-
-      function label(mode){ return mode==='light'?'☀️ Light' : mode==='dark'?'🌙 Dark' : '🌗 System Default'; }
-      function apply(mode){ root.setAttribute('data-theme', mode); btn.textContent = label(mode); }
-
-      const saved = localStorage.getItem(KEY) || 'auto';
-      apply(saved);
-
-      btn.addEventListener('click', ()=>{
-        const cur = root.getAttribute('data-theme') || 'auto';
-        const next = cur==='auto' ? 'light' : cur==='light' ? 'dark' : 'auto';
-        localStorage.setItem(KEY, next);
-        apply(next);
-      });
-    })();
-  </script>
+    <script src="animations.js"></script>
 </body>
+
 </html>
