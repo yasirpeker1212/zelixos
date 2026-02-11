@@ -1,109 +1,259 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 • ZelixOS</title>
-  <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
-  <style>
-    :root {
-      --primary: #6366f1;
-      --accent: #06b6d4;
-      --bg-dark: #0a0a0f;
-      --bg-darker: #050508;
-      --text: #e5e7eb;
-      --text-dim: #9ca3af;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Page Not Found · ZelixOS</title>
+    <meta name="description" content="The page you're looking for doesn't exist.">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme.js"></script>
+    <style>
+        .error-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 80px 24px;
+        }
 
-    body {
-      margin: 0;
-      background: var(--bg-dark);
-      color: var(--text);
-      font-family: 'Inter', system-ui, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-      overflow: hidden;
-    }
+        .error-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 560px;
+        }
 
-    .error-title {
-      font-size: clamp(5rem, 15vw, 10rem);
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 0;
-    }
+        .error-code {
+            font-size: clamp(6rem, 18vw, 12rem);
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 8px;
+            background: var(--brand-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
 
-    .error-sub {
-      font-size: 1.5rem;
-      color: var(--text-dim);
-      margin-bottom: 2rem;
-    }
+        @keyframes pulseGlow {
 
-    .desc {
-      color: var(--text-dim);
-      max-width: 600px;
-      margin: 0 auto 2rem;
-      font-size: 1rem;
-      line-height: 1.7;
-    }
+            0%,
+            100% {
+                filter: drop-shadow(0 0 20px rgba(79, 125, 247, 0.3));
+            }
 
-    .btn {
-      display: inline-block;
-      padding: 1rem 2rem;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      color: white;
-      font-weight: 600;
-      text-decoration: none;
-      border-radius: 12px;
-      transition: all 0.3s ease;
-    }
+            50% {
+                filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.5));
+            }
+        }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4);
-    }
+        .error-title {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
 
-    .floating {
-      position: absolute;
-      opacity: 0.05;
-      font-size: 18rem;
-      font-weight: 900;
-      user-select: none;
-      animation: float 10s ease-in-out infinite alternate;
-    }
+        .error-desc {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
 
-    @keyframes float {
-      from { transform: translateY(0); }
-      to { transform: translateY(-30px); }
-    }
+        .error-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
 
-    footer {
-      position: absolute;
-      bottom: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-dim);
-    }
-  </style>
+        .error-links {
+            margin-top: 48px;
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .error-links a {
+            color: var(--text-tertiary);
+            font-size: 0.88rem;
+            transition: color 0.3s ease;
+        }
+
+        .error-links a:hover {
+            color: var(--text-accent);
+        }
+
+        /* Animated floating shapes */
+        .error-shapes {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            border: 2px solid var(--border-card);
+            border-radius: var(--radius-md);
+            opacity: 0.15;
+            animation: floatShape 20s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            width: 60px;
+            height: 60px;
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
+            transform: rotate(15deg);
+        }
+
+        .shape-2 {
+            width: 40px;
+            height: 40px;
+            top: 70%;
+            left: 20%;
+            animation-delay: -4s;
+            border-radius: 50%;
+        }
+
+        .shape-3 {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            right: 15%;
+            animation-delay: -8s;
+            transform: rotate(45deg);
+        }
+
+        .shape-4 {
+            width: 50px;
+            height: 50px;
+            bottom: 20%;
+            right: 25%;
+            animation-delay: -12s;
+            border-radius: 50%;
+        }
+
+        .shape-5 {
+            width: 36px;
+            height: 36px;
+            top: 50%;
+            left: 5%;
+            animation-delay: -16s;
+            transform: rotate(30deg);
+        }
+
+        @keyframes floatShape {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            25% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+
+            50% {
+                transform: translateY(10px) rotate(-5deg);
+            }
+
+            75% {
+                transform: translateY(-10px) rotate(8deg);
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <div class="floating" style="left:5%; top:10%;">Z</div>
-  <div class="floating" style="right:5%; bottom:5%;">OS</div>
 
-  <h1 class="error-title">404</h1>
-  <p class="error-sub">Page Not Found</p>
-  <p class="desc">
-    The page you’re looking for doesn’t exist or may have been moved.  
-    Check the URL or return to the homepage to continue exploring ZelixOS.
-  </p>
-  <a href="index.html" class="btn">← Back to Home</a>
+    <!-- ═══ NAVBAR ═══ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="url(#logo-grad)" />
+                    <path d="M8 22L16 10L20 16L24 10" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <defs>
+                        <linearGradient id="logo-grad" x1="0" y1="0" x2="32" y2="32">
+                            <stop stop-color="#4F7DF7" />
+                            <stop offset="1" stop-color="#8B5CF6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                ZelixOS
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="download.html">Download</a></li>
+                <li><a href="wiki.html">Wiki</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="theme-toggle" id="themeToggle">
+                    <button data-theme="light" title="Light mode" aria-label="Light mode">☀️</button>
+                    <button data-theme="dark" title="Dark mode" aria-label="Dark mode">🌙</button>
+                    <button data-theme="system" title="System default" aria-label="System default">🖥️</button>
+                </div>
+                <a href="download.html" class="btn btn-primary btn-nav">Download</a>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
 
-  <footer>
-    © 2025 ZelixOS by CyberPlus Studios
-  </footer>
+    <!-- ═══ 404 CONTENT ═══ -->
+    <section class="error-page">
+        <div class="hero-bg">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+
+        <div class="error-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+
+        <div class="error-content">
+            <div class="error-code">404</div>
+            <h1 class="error-title">Page Not Found</h1>
+            <p class="error-desc">
+                Oops! The page you're looking for seems to have drifted into another dimension.
+                Let's get you back on track.
+            </p>
+            <div class="error-actions">
+                <a href="index.html" class="btn btn-primary">
+                    ← Back to Home
+                </a>
+                <a href="wiki.html" class="btn btn-secondary">
+                    Browse Wiki
+                </a>
+            </div>
+            <div class="error-links">
+                <a href="download.html">Downloads</a>
+                <a href="about.html">About</a>
+                <a href="br.html">Report a Bug</a>
+                <a href="https://github.com/yasirpeker1212/zelixos/" target="_blank" rel="noopener">GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="animations.js"></script>
 </body>
+
 </html>
