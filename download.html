@@ -1,501 +1,245 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>ZelixOS – Downloads</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- Aynı font (Inter + system-ui stack) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-
-  <style>
-    /* Genel reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      min-height: 100vh;
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Cantarell, sans-serif;
-      color: #ffffff;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Animasyonlu siyah-mor arka plan */
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      inset: -20%;
-      z-index: -2;
-      pointer-events: none;
-    }
-
-    /* Ana mor glow */
-    body::before {
-      background:
-        radial-gradient(circle at 20% 10%, rgba(140, 82, 255, 0.5), transparent 55%),
-        radial-gradient(circle at 80% 80%, rgba(80, 40, 180, 0.5), transparent 60%),
-        radial-gradient(circle at 50% 50%, #05030f, #020008 55%, #000 100%);
-      animation: bgShift 22s ease-in-out infinite alternate;
-      filter: blur(6px);
-    }
-
-    /* Hafif koyu mor dalga */
-    body::after {
-      background:
-        radial-gradient(circle at 10% 90%, rgba(40, 0, 80, 0.5), transparent 60%),
-        radial-gradient(circle at 90% 15%, rgba(20, 0, 60, 0.5), transparent 65%);
-      animation: bgPulse 26s ease-in-out infinite alternate;
-      opacity: 0.7;
-    }
-
-    @keyframes bgShift {
-      0% {
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-      100% {
-        transform: translate3d(-3%, 4%, 0) scale(1.06);
-      }
-    }
-
-    @keyframes bgPulse {
-      0% {
-        transform: translate3d(3%, -2%, 0) scale(1.02);
-        opacity: 0.6;
-      }
-      100% {
-        transform: translate3d(-4%, 3%, 0) scale(1.08);
-        opacity: 0.9;
-      }
-    }
-
-    /* NAVBAR */
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 5;
-      background: rgba(5, 6, 15, 0.96);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .nav-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0.75rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-    }
-
-    .nav-logo {
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: 0.05em;
-      text-decoration: none;
-      background: linear-gradient(120deg, #5b5fff, #2ec5ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      white-space: nowrap;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.75rem;
-      flex: 1;
-      justify-content: center;
-    }
-
-    .nav-link {
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: #e5e7f5;
-      text-decoration: none;
-      position: relative;
-      padding-bottom: 2px;
-    }
-
-    .nav-link::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -4px;
-      height: 2px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #5b5fff, #2ec5ff);
-      transform: scaleX(0);
-      transform-origin: center;
-      transition: transform 0.18s ease-out;
-    }
-
-    .nav-link:hover::after,
-    .nav-link-active::after {
-      transform: scaleX(1);
-    }
-
-    .nav-link-active {
-      color: #ffffff;
-      font-weight: 600;
-    }
-
-    .theme-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.35rem 0.8rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(10, 12, 26, 0.9);
-      color: #f7f7ff;
-      font-size: 0.8rem;
-      cursor: pointer;
-      outline: none;
-    }
-
-    .theme-icon {
-      font-size: 0.9rem;
-    }
-
-    .theme-label {
-      font-weight: 500;
-    }
-
-    @media (max-width: 720px) {
-      .nav-inner {
-        padding-inline: 1rem;
-      }
-      .nav-links {
-        display: none; /* mobil için basit çözüm; istersen burger ekleriz */
-      }
-    }
-
-    /* Sayfa wrapper'ı arka planın üstüne çıkarmak için */
-    .page-wrapper {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 4rem 1.5rem 3rem;
-    }
-
-    /* DOWNLOADS SECTION */
-    .downloads-section {
-      text-align: center;
-    }
-
-    .downloads-title {
-      font-size: clamp(2.4rem, 3vw, 2.8rem);
-      font-weight: 800;
-      margin-bottom: 1rem;
-    }
-
-    .downloads-subtitle {
-      color: #9ca3c7;
-      font-size: 1.02rem;
-      max-width: 640px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.6;
-    }
-
-    .downloads-subtitle b {
-      color: #ffffff;
-    }
-
-    .downloads-grid {
-      display: grid;
-      gap: 1.8rem;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-      margin-top: 1.25rem;
-    }
-
-    /* CARD */
-    .download-card {
-      background: rgba(8, 10, 26, 0.86);
-      backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 1.8rem;
-      border-radius: 24px;
-      text-align: left;
-      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.55);
-      position: relative;
-      overflow: hidden;
-      transform: translateY(8px);
-      opacity: 0;
-      animation: cardIn 0.7s ease forwards;
-    }
-
-    /* Kartlara hafif sıra sıra giriş animasyonu */
-    .download-card:nth-child(1) { animation-delay: 0.1s; }
-    .download-card:nth-child(2) { animation-delay: 0.2s; }
-    .download-card:nth-child(3) { animation-delay: 0.3s; }
-    .download-card:nth-child(4) { animation-delay: 0.4s; }
-
-    @keyframes cardIn {
-      from {
-        transform: translateY(14px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    .download-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top left, rgba(120, 90, 255, 0.35), transparent 60%);
-      opacity: 0.9;
-      pointer-events: none;
-    }
-
-    .card-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 1rem;
-      gap: 0.5rem;
-    }
-
-    .card-top h2 {
-      font-size: 1.3rem;
-      font-weight: 700;
-    }
-
-    .iso-info {
-      color: #9fa4c3;
-      font-size: 0.9rem;
-      white-space: nowrap;
-    }
-
-    /* TAGS */
-    .tag {
-      padding: 3px 8px;
-      border-radius: 999px;
-      font-size: 0.65rem;
-      font-weight: 600;
-      margin-left: 0.4rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .tag.latest {
-      background: rgba(90, 94, 255, 0.2);
-      border: 1px solid #5a5eff;
-      color: #c6c8ff;
-    }
-
-    .tag.experimental {
-      background: rgba(255, 89, 89, 0.15);
-      border: 1px solid #ff5a5a;
-      color: #ffbaba;
-    }
-
-    /* LIST */
-    .card-list {
-      margin-bottom: 1.5rem;
-      padding-left: 1.1rem;
-      color: #c3c8e8;
-      font-size: 0.95rem;
-    }
-
-    .card-list li {
-      margin-bottom: 0.35rem;
-    }
-
-    /* BUTTONS */
-    .card-buttons {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    /* Daha kalın, dolgun buton tasarımı */
-    .btn {
-      padding: 12px 22px;
-      border-radius: 14px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      border-width: 2px !important;
-      transition: all 0.18s ease;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Primary (mor buton) */
-    .btn.primary {
-      background: linear-gradient(135deg, #605bff, #8a84ff);
-      box-shadow: 0 12px 28px rgba(91, 95, 255, 0.55);
-      color: #ffffff;
-    }
-
-    .btn.primary:hover {
-      background: linear-gradient(135deg, #7a75ff, #a39dff);
-      box-shadow: 0 16px 34px rgba(91, 95, 255, 0.7);
-      transform: translateY(-2px);
-    }
-
-    /* Ghost (şeffaf buton) */
-    .btn.ghost {
-      background: rgba(255, 255, 255, 0.10);
-      border: 2px solid rgba(255, 255, 255, 0.22);
-      color: #e3e4ff;
-    }
-
-    .btn.ghost:hover {
-      background: rgba(255, 255, 255, 0.20);
-      border-color: rgba(255, 255, 255, 0.35);
-      transform: translateY(-2px);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloads — ZelixOS</title>
+    <meta name="description"
+        content="Download the latest stable release of ZelixOS. Available in standard and minimal editions.">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme.js"></script>
 </head>
 
 <body>
-  <!-- NAVBAR -->
-  <header class="nav">
-    <div class="nav-inner">
-      <a href="https://lanierc.github.io/zelixos" class="nav-logo">ZelixOS</a>
 
-      <nav class="nav-links">
-        <a href="https://lanierc.github.io/zelixos/download.html" class="nav-link nav-link-active">Download</a>
-        <a href="https://lanierc.github.io/zelixos/#features" class="nav-link">Features</a>
-        <a href="https://lanierc.github.io/zelixos/wiki.html" class="nav-link">Wiki</a>
-        <a href="https://lanierc.github.io/zelixos/br.html" class="nav-link">Report a Bug</a>
-        <a href="https://lanierc.github.io/zelixos/about.html" class="nav-link">About</a>
-        <a href="https://lanierc.github.io/zelixos/#gallery" class="nav-link">Gallery</a>
-      </nav>
+    <!-- ═══ NAVBAR ═══ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="url(#logo-grad)" />
+                    <path d="M8 22L16 10L20 16L24 10" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <defs>
+                        <linearGradient id="logo-grad" x1="0" y1="0" x2="32" y2="32">
+                            <stop stop-color="#4F7DF7" />
+                            <stop offset="1" stop-color="#8B5CF6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                ZelixOS
+            </a>
 
-      <button class="theme-toggle" type="button">
-        <span class="theme-icon">🌙</span>
-        <span class="theme-label">Dark</span>
-      </button>
-    </div>
-  </header>
-
-  <div class="page-wrapper">
-    <section class="downloads-section">
-      <h1 class="downloads-title">Downloads</h1>
-      <p class="downloads-subtitle">
-        Download the latest stable release. When flashing the ISO, you can use <b>Rufus</b>, 
-        <b>Balena Etcher</b>, or <b>Ventoy</b>.
-      </p>
-
-      <div class="downloads-grid">
-
-        <!-- ZelixOS 0.4 -->
-        <div class="download-card">
-          <div class="card-inner">
-            <div class="card-top">
-              <h2>ZelixOS 0.4 <span class="tag latest">Latest</span></h2>
-              <span class="iso-info">AMD64 • ~4.8 GB</span>
-            </div>
-
-            <ul class="card-list">
-              <li>New unified Zelix Hello application</li>
-              <li>New Calamares installation theme</li>
-              <li>Boot process bug fixes & refinement</li>
-              <li>System cleanup & codebase improvements</li>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="download.html" class="active">Download</a></li>
+                <li><a href="wiki.html">Wiki</a></li>
+                <li><a href="about.html">About</a></li>
             </ul>
 
-            <div class="card-buttons">
-              <a href="https://drive.google.com/file/d/1pOC380bKMjlR575HkIApDPeOzyPVZuQt/view?usp=sharing" class="btn primary">Download ISO</a>
-              <a href="https://example.com/sha256_0_4" class="btn ghost">SHA256</a>
-              <a href="https://github.com/lanierc/zelixos/releases/tag/ZelixOS04" class="btn ghost">Release Notes</a>
+            <div class="nav-actions">
+                <div class="theme-toggle" id="themeToggle">
+                    <button data-theme="light" title="Light mode" aria-label="Light mode">☀️</button>
+                    <button data-theme="dark" title="Dark mode" aria-label="Dark mode">🌙</button>
+                    <button data-theme="system" title="System default" aria-label="System default">🖥️</button>
+                </div>
+                <a href="download.html" class="btn btn-primary btn-nav">Download</a>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
-          </div>
         </div>
+    </nav>
 
-        <!-- ZelixOS 0.3 -->
-        <div class="download-card">
-          <div class="card-inner">
-            <div class="card-top">
-              <h2>ZelixOS 0.3</h2>
-              <span class="iso-info">AMD64 • ~4.8 GB</span>
-            </div>
-
-            <ul class="card-list">
-              <li>New Welcome flow</li>
-              <li>Improved default apps</li>
-              <li>General bug fixes</li>
-              <li>Performance improvements</li>
-            </ul>
-
-            <div class="card-buttons">
-              <a href="https://drive.google.com/file/d/1AuBvTMUaMpoOZc8lts38zjYAE1i_b2hZ/view?usp=sharing" class="btn primary">Download ISO</a>
-              <a href="https://example.com/sha256_0_3" class="btn ghost">SHA256</a>
-              <a href="https://github.com/lanierc/zelixos/releases/tag/ZelixOS" class="btn ghost">Release Notes</a>
-            </div>
-          </div>
+    <!-- ═══ PAGE HERO ═══ -->
+    <section class="page-hero">
+        <div class="hero-bg">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
         </div>
-
-        <!-- ZelixOS 0.2 -->
-        <div class="download-card">
-          <div class="card-inner">
-            <div class="card-top">
-              <h2>ZelixOS 0.2</h2>
-              <span class="iso-info">AMD64 • ~4.0 GB</span>
-            </div>
-
-            <ul class="card-list">
-              <li>First public preview</li>
-              <li>Essential application set</li>
-              <li>Not recommended</li>
-              <li>Most of the programs are laggy</li>
-            </ul>
-
-            <div class="card-buttons">
-              <a href="https://drive.google.com/file/d/16eX8QS5Q9yxZeOL-ocVq9pxJ7IPJSkFu/view?usp=drive_link" class="btn primary">Download ISO</a>
-              <a href="https://example.com/sha256_0_2" class="btn ghost">SHA256</a>
-              <a href="https://github.com/lanierc/zelixos/releases/tag/0.2" class="btn ghost">Release Notes</a>
-            </div>
-          </div>
+        <div class="hero-grid"></div>
+        <div class="page-hero-content">
+            <span class="badge">⬇️ Downloads</span>
+            <h1>Download <span class="gradient-text">ZelixOS</span></h1>
+            <p>Download the latest stable release. When flashing the ISO, you can use Rufus, Balena Etcher, or Ventoy.
+            </p>
         </div>
-
-        <!-- ZelixOS Minimal Edition -->
-        <div class="download-card">
-          <div class="card-inner">
-            <div class="card-top">
-              <h2>ZelixOS Minimal Edition <span class="tag experimental">Experimental</span></h2>
-              <span class="iso-info">AMD64 • ~2.1 GB</span>
-            </div>
-
-            <ul class="card-list">
-              <li>Lightweight package set</li>
-              <li>Only core apps installed</li>
-              <li>Designed for low-end devices</li>
-            </ul>
-
-            <div class="card-buttons">
-              <a href="#" class="btn primary">Download ISO</a>
-              <a href="#" class="btn ghost">SHA256</a>
-              <a href="#" class="btn ghost">Release Notes</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Wiki link -->
-      <p style="text-align:center; margin-top:2rem;">
-        <a href="wiki.html" style="text-decoration:none; color:white;">Visit the Wiki for installation guide →</a>
-      </p>
-
     </section>
-  </div>
+
+    <!-- ═══ DOWNLOADS ═══ -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="download-grid">
+
+                <!-- 0.4 Latest -->
+                <div class="download-card latest reveal reveal-delay-1">
+                    <div class="download-card-header">
+                        <h3>ZelixOS 0.4</h3>
+                        <span class="latest-badge">Latest</span>
+                    </div>
+                    <div class="download-card-body">
+                        <ul>
+                            <li>New unified Zelix Hello application</li>
+                            <li>New Calamares installation theme</li>
+                            <li>Boot process bug fixes &amp; refinement</li>
+                            <li>System cleanup &amp; codebase improvements</li>
+                        </ul>
+                        <div class="download-actions">
+                            <a href="https://drive.google.com/file/d/1pOC380bKMjlR575HkIApDPeOzyPVZuQt/view?usp=sharing"
+                                target="_blank" rel="noopener" class="btn btn-primary btn-sm">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                                    <polyline points="7 10 12 15 17 10" />
+                                    <line x1="12" y1="15" x2="12" y2="3" />
+                                </svg>
+                                Download ISO
+                            </a>
+                            <a href="https://github.com/lanierc/zelixos/releases/tag/ZelixOS04" target="_blank"
+                                rel="noopener" class="btn btn-secondary btn-sm">Release Notes</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 0.3 -->
+                <div class="download-card reveal reveal-delay-2">
+                    <div class="download-card-header">
+                        <h3>ZelixOS 0.3</h3>
+                    </div>
+                    <div class="download-card-body">
+                        <ul>
+                            <li>New Welcome flow</li>
+                            <li>Improved default apps</li>
+                            <li>General bug fixes</li>
+                            <li>Performance improvements</li>
+                        </ul>
+                        <div class="download-actions">
+                            <a href="https://drive.google.com/file/d/1AuBvTMUaMpoOZc8lts38zjYAE1i_b2hZ/view?usp=sharing"
+                                target="_blank" rel="noopener" class="btn btn-primary btn-sm">Download ISO</a>
+                            <a href="https://github.com/lanierc/zelixos/releases/tag/ZelixOS" target="_blank"
+                                rel="noopener" class="btn btn-secondary btn-sm">Release Notes</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 0.2 -->
+                <div class="download-card reveal reveal-delay-3">
+                    <div class="download-card-header">
+                        <h3>ZelixOS 0.2</h3>
+                    </div>
+                    <div class="download-card-body">
+                        <ul>
+                            <li>First public preview</li>
+                            <li>Essential application set</li>
+                            <li>Not recommended</li>
+                            <li>Most of the programs are laggy</li>
+                        </ul>
+                        <div class="download-actions">
+                            <a href="https://drive.google.com/file/d/16eX8QS5Q9yxZeOL-ocVq9pxJ7IPJSkFu/view?usp=drive_link"
+                                target="_blank" rel="noopener" class="btn btn-primary btn-sm">Download ISO</a>
+                            <a href="https://github.com/lanierc/zelixos/releases/tag/0.2" target="_blank" rel="noopener"
+                                class="btn btn-secondary btn-sm">Release Notes</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Minimal -->
+                <div class="download-card reveal reveal-delay-4">
+                    <div class="download-card-header">
+                        <h3>ZelixOS Minimal Edition</h3>
+                        <span class="badge" style="font-size:0.7rem; padding:3px 10px;">Experimental</span>
+                    </div>
+                    <div class="download-card-body">
+                        <ul>
+                            <li>Lightweight package set</li>
+                            <li>Only core apps installed</li>
+                            <li>Designed for low-end devices</li>
+                        </ul>
+                        <div class="download-actions">
+                            <a href="#" class="btn btn-secondary btn-sm">Coming Soon</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="text-align:center; margin-top:48px;" class="reveal">
+                <a href="wiki.html" class="btn btn-secondary">Visit the Wiki for installation guide →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="nav-brand">
+                    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                        <rect width="32" height="32" rx="8" fill="url(#logo-grad2)" />
+                        <path d="M8 22L16 10L20 16L24 10" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <defs>
+                            <linearGradient id="logo-grad2" x1="0" y1="0" x2="32" y2="32">
+                                <stop stop-color="#4F7DF7" />
+                                <stop offset="1" stop-color="#8B5CF6" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    ZelixOS
+                </a>
+                <p>A modern, user-friendly Linux distribution built with care and precision by CyberPlus Studios.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="download.html">Download</a></li>
+                    <li><a href="index.html#specs">Requirements</a></li>
+                    <li><a href="index.html#gallery">Gallery</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="wiki.html">Documentation</a></li>
+                    <li><a href="https://www.reddit.com/r/ZelixOS/" target="_blank" rel="noopener">Community</a></li>
+                    <li><a href="https://github.com/yasirpeker1212/zelixos/" target="_blank" rel="noopener">GitHub</a>
+                    </li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="pp.html">Privacy Policy</a></li>
+                    <li><a href="br.html">Report a Bug</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 ZelixOS by CyberPlus Studios. All rights reserved.</p>
+            <div class="footer-social">
+                <a href="https://github.com/yasirpeker1212/zelixos/" target="_blank" rel="noopener" title="GitHub"
+                    aria-label="GitHub">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                </a>
+                <a href="https://www.reddit.com/r/ZelixOS/" target="_blank" rel="noopener" title="Reddit"
+                    aria-label="Reddit">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0A12 12 0 000 12a12 12 0 0024 0A12 12 0 0012 0zm5.01 13.38c.15.36.23.75.23 1.14 0 2.82-3.28 5.1-7.32 5.1s-7.32-2.28-7.32-5.1c0-.4.08-.78.23-1.14a1.52 1.52 0 01-.65-1.25c0-.84.68-1.52 1.52-1.52.39 0 .74.15 1.01.39a9.1 9.1 0 014.59-1.41l.88-4.12a.31.31 0 01.37-.24l2.91.62a1.07 1.07 0 012.01.49 1.07 1.07 0 01-2.08.34l-2.56-.55-.78 3.65a9.06 9.06 0 014.5 1.4c.27-.25.63-.4 1.03-.4.84 0 1.52.68 1.52 1.52 0 .51-.26.97-.66 1.25zM8.28 14.12a1.07 1.07 0 100 2.14 1.07 1.07 0 000-2.14zm7.44 0a1.07 1.07 0 100 2.14 1.07 1.07 0 000-2.14zm-5.87 3.63c.18.18 1.03.72 2.15.72s1.97-.54 2.15-.72a.32.32 0 000-.45.32.32 0 00-.45 0c-.02.02-.72.48-1.7.48s-1.68-.46-1.7-.48a.32.32 0 00-.45 0 .32.32 0 000 .45z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="animations.js"></script>
 </body>
+
 </html>
