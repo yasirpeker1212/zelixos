@@ -5,7 +5,7 @@
 <h1 align="center">ZelixOS</h1>
 
 <p align="center">
-  Fast, minimal and refined Linux distribution
+  A clean and performance-focused Linux distribution
 </p>
 
 <p align="center">
@@ -13,7 +13,7 @@
     <img src="https://img.shields.io/badge/Download-ISO-blue?style=for-the-badge">
   </a>
   <img src="https://img.shields.io/badge/Version-0.4-orange?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Base-Ubuntu-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Base-Ubuntu%20LTS-green?style=for-the-badge">
   <img src="https://img.shields.io/badge/Desktop-KDE%20Plasma-blueviolet?style=for-the-badge">
   <img src="https://img.shields.io/badge/License-GPL--3.0-lightgrey?style=for-the-badge">
 </p>
@@ -22,61 +22,88 @@
 
 ## About
 
-ZelixOS is a Linux distribution based on Ubuntu, designed to provide a fast, clean and consistent desktop experience.
+ZelixOS is an Ubuntu-based Linux distribution focused on delivering a fast, minimal and consistent desktop experience.
 
-The system focuses on simplicity, performance and usability. Instead of including unnecessary components, it delivers a carefully selected environment that works reliably out of the box.
+It is built on a stable Ubuntu LTS foundation, while applying system-level optimizations and removing unnecessary components to improve responsiveness and reduce system overhead. ([Reddit][1])
+
+The goal is simple: provide a system that feels clean, predictable and efficient in daily use.
 
 ---
 
-## Philosophy
+## Design Approach
 
-ZelixOS follows a simple principle:
+ZelixOS combines two different philosophies:
 
-A system should be fast, predictable and easy to use.
+* The stability and hardware compatibility of Ubuntu
+* The minimal and unbloated mindset often associated with Arch-based systems ([Technopat][2])
 
-To achieve this, the distribution prioritizes:
+Instead of exposing complexity, the system applies these principles internally and presents a refined user experience.
 
-* Minimal preinstalled software
-* Consistent system configuration
-* Stable base with controlled updates
-* Practical tools that solve real tasks
+---
+
+## System Characteristics
+
+* Optimized startup and background services
+* Reduced RAM usage and faster boot times ([Reddit][1])
+* Snap removed for a cleaner package environment ([Reddit][1])
+* Consistent and minimal KDE Plasma configuration
+* Focus on responsiveness over visual overhead
 
 ---
 
 ## Core Components
 
-* Base: Ubuntu
-* Desktop: KDE Plasma
+* Base: Ubuntu LTS
+* Desktop: KDE Plasma (custom tuned)
+* Package Management: APT
 * Installer: Calamares
 
 ---
 
-## Included Tools
+## Zelix Toolset
 
-ZelixOS provides a small set of integrated utilities:
+ZelixOS includes a small set of integrated utilities developed specifically for the system:
 
-* Zelix Hello — initial setup and guidance
-* Zelix Iso Writer — ISO writing tool
-* Zelix Cleaner — system cleanup utility
-* Zelix Backup — backup and restore tool
+* Zelix Hello — onboarding and system introduction
+* Zelix Cleaner — cleanup and optimization
+* Zelix Backup — backup and restore
+* Zelix Essentials — core system tools
+* Zelix Helper — quick access and system assistance ([Reddit][1])
+
+These tools aim to simplify common tasks without requiring additional software.
 
 ---
 
 ## Performance
 
-ZelixOS is configured to reduce unnecessary background processes and improve responsiveness.
+ZelixOS is tuned to reduce unnecessary system load while maintaining usability.
 
-The goal is a system that boots quickly, runs smoothly and remains stable under daily use.
+* Fewer background processes
+* Faster application launch times
+* Smooth and stable desktop behavior
+
+The system is designed for both low-resource machines and modern hardware.
+
+---
+
+## Target Users
+
+ZelixOS is suitable for:
+
+* Users who want a clean Ubuntu-based system
+* KDE Plasma users looking for a more refined setup
+* Beginners transitioning to Linux
+* Developers and students who need a stable and fast environment ([Reddit][1])
 
 ---
 
 ## Release Model
 
-ZelixOS uses a semi-rolling model:
+ZelixOS follows a semi-rolling model:
 
-* Stable Ubuntu base
-* Incremental updates for applications and components
-* No need for frequent full reinstalls
+* Stable Ubuntu LTS base
+* Incremental updates and improvements
+* No frequent full reinstall requirement
 
 ---
 
@@ -98,10 +125,13 @@ https://lanierc.github.io/zelixos#download
 
 ## Contributing
 
-Contributions and feedback are welcome.
+Contributions, feedback and suggestions are welcome.
 
 ---
 
 ## License
 
 GPL-3.0
+
+[1]: https://www.reddit.com/r/linux_programming/comments/1p27rmz/introducing_zelixos_a_modern_fast_and_clean_linux/?utm_source=chatgpt.com "Introducing ZelixOS: A Modern, Fast, and Clean Linux Distribution"
+[2]: https://www.technopat.net/sosyal/konu/kendi-linux-dagitimim-zelixos.3975226/?utm_source=chatgpt.com "Kendi Linux dağıtımım: Zelixos | Technopat Sosyal"
