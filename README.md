@@ -16,7 +16,7 @@
 
 ---
 
-## 🚀 About ZelixOS
+## About ZelixOS
 
 **ZelixOS** is a Ubuntu–based Linux distribution that blends stability, performance, and elegant design.  
 It’s crafted for users who want a smooth, modern desktop experience with optimized performance and essential productivity tools built right in.
@@ -25,7 +25,7 @@ ZelixOS aims to deliver the perfect balance between simplicity and power — ide
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
 - 🔹 KDE Plasma desktop environment  
 - 🔹 **Zelix Hello** app for first-time setup guidance  
@@ -37,7 +37,7 @@ ZelixOS aims to deliver the perfect balance between simplicity and power — ide
 
 ---
 
-## 📦 Latest Release
+## Latest Release
 
 | Version | Codename | Status | Year |
 |----------|-----------|--------|------|
