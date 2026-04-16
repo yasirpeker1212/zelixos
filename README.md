@@ -24,7 +24,7 @@
 
 ZelixOS is an Ubuntu-based Linux distribution focused on delivering a fast, minimal and consistent desktop experience.
 
-It is built on a stable Ubuntu LTS foundation, while applying system-level optimizations and removing unnecessary components to improve responsiveness and reduce system overhead. ([Reddit][1])
+It is built on a stable Ubuntu LTS foundation, while applying system-level optimizations and removing unnecessary components to improve responsiveness and reduce system overhead. 
 
 The goal is simple: provide a system that feels clean, predictable and efficient in daily use.
 
@@ -35,7 +35,7 @@ The goal is simple: provide a system that feels clean, predictable and efficient
 ZelixOS combines two different philosophies:
 
 * The stability and hardware compatibility of Ubuntu
-* The minimal and unbloated mindset often associated with Arch-based systems ([Technopat][2])
+* The minimal and unbloated mindset often associated with Arch-based systems 
 
 Instead of exposing complexity, the system applies these principles internally and presents a refined user experience.
 
@@ -44,8 +44,8 @@ Instead of exposing complexity, the system applies these principles internally a
 ## System Characteristics
 
 * Optimized startup and background services
-* Reduced RAM usage and faster boot times ([Reddit][1])
-* Snap removed for a cleaner package environment ([Reddit][1])
+* Reduced RAM usage and faster boot times
+* Snap removed for a cleaner package environment 
 * Consistent and minimal KDE Plasma configuration
 * Focus on responsiveness over visual overhead
 
@@ -68,7 +68,7 @@ ZelixOS includes a small set of integrated utilities developed specifically for 
 * Zelix Cleaner — cleanup and optimization
 * Zelix Backup — backup and restore
 * Zelix Essentials — core system tools
-* Zelix Helper — quick access and system assistance ([Reddit][1])
+* Zelix Helper — quick access and system assistance
 
 These tools aim to simplify common tasks without requiring additional software.
 
@@ -93,7 +93,7 @@ ZelixOS is suitable for:
 * Users who want a clean Ubuntu-based system
 * KDE Plasma users looking for a more refined setup
 * Beginners transitioning to Linux
-* Developers and students who need a stable and fast environment ([Reddit][1])
+* Developers and students who need a stable and fast environment 
 
 ---
 
