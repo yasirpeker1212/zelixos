@@ -13,7 +13,7 @@
     <img src="https://img.shields.io/badge/Download-ISO-blue?style=for-the-badge">
   </a>
   <img src="https://img.shields.io/badge/Version-0.4-orange?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Base-Ubuntu%20LTS-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Base-Arch%20Linux-blue?style=for-the-badge">
   <img src="https://img.shields.io/badge/Desktop-KDE%20Plasma-blueviolet?style=for-the-badge">
   <img src="https://img.shields.io/badge/License-GPL--3.0-lightgrey?style=for-the-badge">
 </p>
@@ -22,9 +22,7 @@
 
 ## About
 
-ZelixOS is an Ubuntu-based Linux distribution focused on delivering a fast, minimal and consistent desktop experience.
-
-It is built on a stable Ubuntu LTS foundation, while applying system-level optimizations and removing unnecessary components to improve responsiveness and reduce system overhead. 
+ZelixOS is an Arch-based Linux distribution focused on delivering a fast, minimal and consistent desktop experience.
 
 The goal is simple: provide a system that feels clean, predictable and efficient in daily use.
 
@@ -34,7 +32,7 @@ The goal is simple: provide a system that feels clean, predictable and efficient
 
 ZelixOS combines two different philosophies:
 
-* The stability and hardware compatibility of Ubuntu
+* The stability and hardware compatibility like Debian.
 * The minimal and unbloated mindset often associated with Arch-based systems 
 
 Instead of exposing complexity, the system applies these principles internally and presents a refined user experience.
@@ -53,10 +51,10 @@ Instead of exposing complexity, the system applies these principles internally a
 
 ## Core Components
 
-* Base: Ubuntu LTS
-* Desktop: KDE Plasma (custom tuned)
-* Package Management: APT
-* Installer: Calamares
+* Base: Arch Linux
+* Desktop: Hyprland, Sway, KDE Plasma, Gnome, XFCE
+* Package Management: Pacman, yay
+* Installer: Zelix-Installer
 
 ---
 
@@ -99,9 +97,9 @@ ZelixOS is suitable for:
 
 ## Release Model
 
-ZelixOS follows a semi-rolling model:
+ZelixOS follows a rolling-release model:
 
-* Stable Ubuntu LTS base
+* The rolling-release nature of Arch
 * Incremental updates and improvements
 * No frequent full reinstall requirement
 
@@ -111,6 +109,7 @@ ZelixOS follows a semi-rolling model:
 
 | Version | Codename   | Status   | Release |
 | ------- | ---------- | -------- | ------- |
+| 26.1    | Aurora     | Stable   | 2026 Q2 |
 | 0.4     | Metavision | Stable   | 2025 Q4 |
 | 0.3     | Metavision | Stable   | 2025 Q3 |
 | 0.2     | Metavision | Unstable | 2025 Q2 |
@@ -119,7 +118,7 @@ ZelixOS follows a semi-rolling model:
 
 ## Download
 
-https://lanierc.github.io/zelixos#download
+https://zelixos.com/#downloads
 
 ---
 
